@@ -1,0 +1,38 @@
+* magit-gh-issues
+
+  =magit-gh-issues= is a [[https://github.com/magit/magit][Magit]] extension that allows you to
+  conveniently view Github issues. It works similar to
+  =magit-gh-issues=. It is currently a work in progress and supports
+  only basic issue viewing.
+
+** Installation
+
+   =magit-gh-issues= is not yet available on [[http://melpa.milkbox.net/][MELPA]]. Installation
+   requires adding =magit-gh-issues= to your load-path manually:
+
+   #+BEGIN_SRC elisp
+   (add-to-list 'load-path "~/.emacs.d/magit-gh-issues")
+   (require 'gh)
+   (require 'gh-users)
+   (require 'magit-gh-issues)
+   (add-hook 'magit-mode-hook #'turn-on-magit-gh-issues)
+   #+END_SRC
+
+** Usage
+
+   In =magit-status= window press =# g i= to refresh the list of
+   issues.  =magit-gh-issues= automatically infers credentials from
+   the URL of the repository. If there are issues available, a new
+   section will appear called *Issues*. Each item in this section has
+   the following form:
+
+   : [# issue-number@user (status)] title
+
+   Highlighting an issue and pressing =# g b= will open the issue
+   using =browse-url=
+
+** License
+
+   Copyright © 2015 Christopher Reichert
+   Distributed under the GNU General Public License ver. 2. See the header of
+   the [[https://github.com/creichert/magit-gh-issues/blob/master/magit-gh-issues.el][source file]].
