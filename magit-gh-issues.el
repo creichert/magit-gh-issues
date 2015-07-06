@@ -118,7 +118,6 @@
                   (dolist (stub stubs)
                     (let* ((id (oref stub :number)) ;; data))
                            (title (oref stub :title))
-                           (title (oref stub :title))
                            (body (oref stub :body))
                            (user (oref (oref stub :user) :login))
                            (state (oref stub :state))
