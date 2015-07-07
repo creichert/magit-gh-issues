@@ -99,7 +99,7 @@
 
 (defun truncate-string (len s)
   (if (> (length s) len)
-      (format "%s..." (substring s 0 (- len 3)))
+      (format "%s.." (substring s 0 (- len 2)))
     s))
 
 (defun magit-gh-issues-insert-gh-issues ()
@@ -115,12 +115,16 @@
                    (branch (magit-get-current-branch)))
               (when (> (length stubs) 0)
                 (magit-with-section (section stubs 'issues "Issues:" )
+                  ;; limit the number of items
+                  ;; (dolist (stub (subseq stubs 0 (magit-gh-issues-limit)))
                   (dolist (stub stubs)
                     (let* ((id (oref stub :number)) ;; data))
                            (title (oref stub :title))
                            (body (oref stub :body))
                            (user (oref (oref stub :user) :login))
                            (state (oref stub :state))
+                           ;; FIX map over all
+                           (labels (oref stub :labels))
                            (have-comments t)
                            (header (concat
                                     "\t[#"
@@ -167,6 +171,9 @@
                         (magit-with-section
                             (section issues info nil nil magit-gh-issues-collapse-commits)
                           (insert header)
+                          (dolist (lbl labels)
+                            (insert (propertize (format "\t%s\n" (cdr (assoc 'name lbl)))
+                                        'font-lock-face '(:foreground "green"))))
                           (insert "\n")
                           (dolist (chunk chunks)
                             (let* ((beg (point)))
