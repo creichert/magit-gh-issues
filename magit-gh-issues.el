@@ -75,15 +75,9 @@
         (cons (car split) (cadr split))))))
 
 (defun magit-gh-issues-parse-url (url)
-  (let ((creds (cond
-                ((s-matches? "github.com:" url)
-                 (s-match "github.com:\\(.+\\)/\\(.+\\)\\(.git\\)?$" url))
-                ((s-matches? "^https?://github.com" url)
-                 (s-match "^https://github.com/\\(.+\\)/\\([^/]+\\)\\(.git\\)?/?$" url))
-                ((s-matches? "git://github.com/" url)
-                 (s-match "git://github.com/\\(.+\\)/\\(.+\\)\\(.git\\)?$" url)))))
+  (let ((creds (s-match "github.com[:/]\\([^/]+\\)/\\([^/]+\\)/?$" url)))
     (when creds
-      (cons (cadr creds) (caddr creds)))))
+      (cons (cadr creds) (s-chop-suffix ".git" (caddr creds))))))
 
 (defun magit-gh-issues-guess-repo-from-origin ()
   (let ((creds nil))
