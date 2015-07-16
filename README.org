@@ -2,8 +2,9 @@
 
   =magit-gh-issues= is a [[https://github.com/magit/magit][Magit]] extension that allows you to
   conveniently view Github issues. It works similar to
-  =magit-gh-issues=. It is currently a work in progress and supports
-  only basic issue viewing.
+  =magit-gh-issues=.
+
+  *This extension is a work in progress and supports open issues only*
 
 ** Installation
 
