@@ -62,7 +62,7 @@
   viewed in magit. It receives a list of issues and should
   return a list of issues.")
 
-(defvar magit-gh-issues-collapse-commits t
+(defvar magit-gh-issues-collapse-issues t
   "Collapse commits in issues requests listing.")
 
 (defun magit-gh-issues-get-api ()
@@ -165,7 +165,7 @@
                        ;; (magit-with-section (section unfetched-issue info)
                        ;;     (insert header)))
                        (t
-                        (magit-insert-section (pull info t)
+                        (magit-insert-section (pull info (magit-gh-issues-collapse-issues))
                           (magit-insert-heading header)
                           (dolist (lbl labels)
                             (insert (propertize (format "\t%s\n" (cdr (assoc 'name lbl)))
