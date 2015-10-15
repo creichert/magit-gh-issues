@@ -108,11 +108,12 @@
                                    (oref (gh-issues-issue-list api owner proj) :data)))
                    (branch (magit-get-current-branch)))
               (when (> (length stubs) 0)
-                (magit-with-section (section stubs 'issues "Issues:" )
+                (magit-insert-section (stubs)
+                  (magit-insert-heading (format "Issues (%s): " (length stubs)))
                   ;; limit the number of items
                   ;; (dolist (stub (subseq stubs 0 (magit-gh-issues-limit)))
                   (dolist (stub stubs)
-                    (let* ((id (oref stub :number)) ;; data))
+                    (let* ((id (oref stub :number))
                            (title (oref stub :title))
                            (body (oref stub :body))
                            (user (oref (oref stub :user) :login))
@@ -121,13 +122,14 @@
                            (labels (oref stub :labels))
                            (have-comments t)
                            (header (concat
-                                    "\t[#"
-                                    (propertize (format "%4s" id)
-                                                'font-lock-face '(:foreground "red"))
+                                    "["
+                                    (propertize (format "#%s" id)
+                                                'face '(:foreground "cyan"))
                                     "@"
                                     (format "%-10s " (truncate-string 10 user))
                                     "("
                                     (propertize (format "%s" state)
+                                                'face '(:foreground "green")
                                                 'font-lock-face '(:weight bold)
                                                 ;; face with some options for future reference
                                                 'face (cond (nil 'widget-inactive)
@@ -144,7 +146,8 @@
                                                             (nil 'error)
                                                             (t 'italic)))
                                     "\n"))
-                           (msg (propertize (format "\t%s\n\n" body)
+                           (msg (propertize (replace-regexp-in-string "\r$" ""
+                                                                      (format "%s\n" body))
                                             ;;'left-margin 30
                                             'face (cond (nil 'widget-inactive)
                                                         ;; (have-commits 'default)
@@ -162,9 +165,8 @@
                        ;; (magit-with-section (section unfetched-issue info)
                        ;;     (insert header)))
                        (t
-                        (magit-with-section
-                            (section issues info nil nil magit-gh-issues-collapse-commits)
-                          (insert header)
+                        (magit-insert-section (pull info t)
+                          (magit-insert-heading header)
                           (dolist (lbl labels)
                             (insert (propertize (format "\t%s\n" (cdr (assoc 'name lbl)))
                                         'font-lock-face '(:foreground "green"))))
@@ -173,8 +175,7 @@
                             (let* ((beg (point)))
                               (insert chunk)
                               (fill-region-as-paragraph beg (point))
-                              (insert "\n")))
-                          (magit-collapse-section))))))
+                              (insert "\n"))))))))
                   ;; TODO set a default limit to stop showing issues (e.g. 50),
                   ;; on that number, break from loop and insert some sort of text
                   (when (> (length stubs) 0)
