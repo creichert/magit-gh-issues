@@ -188,8 +188,9 @@
     (apply 'format url info)))
 
 (defun magit-gh-issues-open-in-browser ()
+  "Open the issue at `magit-current-section' in the browser."
   (interactive)
-  (let ((info (magit-section-info (magit-current-section))))
+  (let ((info (magit-section-value (magit-current-section))))
     (browse-url (magit-gh-issues-url-for-issue info))))
 
 (defun magit-gh-issues-purge-cache ()
