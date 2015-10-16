@@ -165,7 +165,7 @@
                        ;; (magit-with-section (section unfetched-issue info)
                        ;;     (insert header)))
                        (t
-                        (magit-insert-section (pull info (magit-gh-issues-collapse-issues))
+                        (magit-insert-section (pull info magit-gh-issues-collapse-issues)
                           (magit-insert-heading header)
                           (dolist (lbl labels)
                             (insert (propertize (format "%s " (cdr (assoc 'name lbl)))
