@@ -123,8 +123,8 @@
                            (have-comments t)
                            (header (concat
                                     "["
-                                    (propertize (format "#%s" id)
-                                                'face '(:foreground "cyan"))
+                                    (propertize (format "%s" id)
+                                                'face 'magit-tag)
                                     "@"
                                     (format "%-10s " (truncate-string 10 user))
                                     "("
@@ -168,8 +168,9 @@
                         (magit-insert-section (pull info magit-gh-issues-collapse-issues)
                           (magit-insert-heading header)
                           (dolist (lbl labels)
-                            (insert (propertize (format "%s " (cdr (assoc 'name lbl)))
-                                        'font-lock-face '(:foreground "gray"))))
+                            (let ((lbl-clr (format "#%s" (cdr (assoc 'color lbl))))
+                                  (lbl-txt (format "%s " (cdr (assoc 'name lbl)))))
+                              (insert (propertize lbl-txt 'face (list :foreground lbl-clr)))))
                           (insert "\n\n")
                           (dolist (chunk chunks)
                             (let* ((beg (point)))
