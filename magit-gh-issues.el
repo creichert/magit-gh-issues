@@ -123,8 +123,8 @@
                            (have-comments t)
                            (header (concat
                                     "["
-                                    (propertize (format "#%s" id)
-                                                'face '(:foreground "cyan"))
+                                    (propertize (format "%s" id)
+                                                'face 'magit-tag)
                                     "@"
                                     (format "%-10s " (truncate-string 10 user))
                                     "("
