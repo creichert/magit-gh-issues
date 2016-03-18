@@ -258,6 +258,16 @@
   "Unconditionally turn on `magit-issues-mode'."
   (magit-gh-issues-mode 1))
 
+(magit-define-popup magit-gh-issues-popup
+  "Show popup buffer featuring Github Issues commands."
+  'magit-commands
+  :actions  '((?g "Reload" magit-gh-issues-reload)
+              (?o "Open in browser" magit-gh-pulls-open-in-browser))
+  :default-action 'magit-gh-issues-reload)
+
+(magit-define-popup-action 'magit-dispatch-popup
+  ?@ "Github Issues" 'magit-gh-issues-popup ?!)
+
 ;; Tests
 (ert-deftest test-magit-gh-issues-parse-url-git-at ()
   (should (equal '("creichert" . "magit-gh-issues")
