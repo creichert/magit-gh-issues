@@ -262,7 +262,7 @@
   "Show popup buffer featuring Github Issues commands."
   'magit-commands
   :actions  '((?g "Reload" magit-gh-issues-reload)
-              (?o "Open in browser" magit-gh-pulls-open-in-browser))
+              (?o "Open in browser" magit-gh-issues-open-in-browser))
   :default-action 'magit-gh-issues-reload)
 
 (magit-define-popup-action 'magit-dispatch-popup
